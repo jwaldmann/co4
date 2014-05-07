@@ -1,0 +1,350 @@
+YES
+system active (f (b, c,
+                 x1)) -> mark (f (x1, x1, x1))
+       active (f (x1, x2,
+                 x3)) -> f (x1, x2, active (x3))
+       active (d) -> m (b)
+       f (x1, x2,
+         mark (x3)) -> mark (f (x1, x2,
+                               x3))
+       active (d) -> mark (c)
+       proper (b) -> ok (b)
+       proper (c) -> ok (c)
+       proper (d) -> ok (d)
+       proper (f (x1, x2,
+                 x3)) -> f (proper (x1),
+                           proper (x2), proper (x3))
+       f (ok (x1), ok (x2),
+         ok (x3)) -> ok (f (x1, x2, x3))
+       2 more rules
+       
+       total size 86
+is top-terminating because
+dependency pairs transformation
+system active# (f (b, c,
+                  x1)) -> f# (x1, x1, x1)
+       active# (f (x1, x2,
+                  x3)) -> f# (x1, x2, active (x3))
+       active# (f (x1, x2,
+                  x3)) -> active# (x3)
+       f# (x1, x2,
+          mark (x3)) -> f# (x1, x2, x3)
+       proper# (f (x1, x2,
+                  x3)) -> f# (proper (x1),
+                             proper (x2), proper (x3))
+       proper# (f (x1, x2,
+                  x3)) -> proper# (x1)
+       proper# (f (x1, x2,
+                  x3)) -> proper# (x2)
+       proper# (f (x1, x2,
+                  x3)) -> proper# (x3)
+       f# (ok (x1), ok (x2),
+          ok (x3)) -> f# (x1, x2, x3)
+       top# (mark (x1)) -> top# (proper (x1))
+       3 more rules
+       active (f (b, c,
+                 x1)) ->= mark (f (x1, x1, x1))
+       active (f (x1, x2,
+                 x3)) ->= f (x1, x2, active (x3))
+       active (d) ->= m (b)
+       f (x1, x2,
+         mark (x3)) ->= mark (f (x1, x2,
+                                x3))
+       active (d) ->= mark (c)
+       proper (b) ->= ok (b)
+       proper (c) ->= ok (c)
+       proper (d) ->= ok (d)
+       proper (f (x1, x2,
+                 x3)) ->= f (proper (x1),
+                            proper (x2), proper (x3))
+       f (ok (x1), ok (x2),
+         ok (x3)) ->= ok (f (x1, x2, x3))
+       2 more rules
+       total size 187
+is top-terminating because
+EDG has 9 SCCs
+SCC 1 Right (system top# (ok (x1)) -> top# (active (x1))
+                    top# (mark (x1)) -> top# (proper (x1))
+                    active (f (b, c,
+                              x1)) ->= mark (f (x1, x1, x1))
+                    active (f (x1, x2,
+                              x3)) ->= f (x1, x2, active (x3))
+                    active (d) ->= m (b)
+                    f (x1, x2,
+                      mark (x3)) ->= mark (f (x1, x2,
+                                             x3))
+                    active (d) ->= mark (c)
+                    proper (b) ->= ok (b)
+                    proper (c) ->= ok (c)
+                    proper (d) ->= ok (d)
+                    proper (f (x1, x2,
+                              x3)) ->= f (proper (x1),
+                                         proper (x2), proper (x3))
+                    f (ok (x1), ok (x2),
+                      ok (x3)) ->= ok (f (x1, x2, x3))
+                    2 more rules
+                    total size 98
+             is top-terminating because
+             semanticLabeling
+             system top# (ok (x1)) -> top# (active (x1))
+                    proper (b) ->= ok (b)
+                    proper (c) ->= ok (c)
+                    proper (d) ->= ok (d)
+                    proper (f (x1, x2,
+                              x3)) ->= f (proper (x1),
+                                         proper (x2), proper (x3))
+                    f (x1, x2,
+                      mark (x3)) ->= mark (f (x1, x2,
+                                             x3))
+                    f (ok (x1), ok (x2),
+                      ok (x3)) ->= ok (f (x1, x2, x3))
+                    top (ok (x1)) ->= top (active (x1))
+                    top (mark (x1)) ->= top (proper (x1))
+                    active (d) ->= m (b)
+                    active (d) ->= mark (c)
+                    2 more rules
+                    total size 92
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (proper
+                   ,[ - ] * x1 + [ 7 ])
+                   (b,[ 6 ])
+                   (c,[ 2 ])
+                   (d,[ 3 ])
+                   (f
+                   ,[ 0 ] * x1 + [ - ] * x2 + [ 0 ] * x3 + [ - ])
+                   (m,[ - ] * x1 + [ 0 ])
+                   (ok,[ 1 ] * x1 + [ - ])
+                   (top,[ 0 ] * x1 + [ 7 ])
+                   (mark,[ - ] * x1 + [ 3 ])
+                   (active,[ 0 ] * x1 + [ - ])
+                   (top#,[ 0 ] * x1 + [ - ])
+             usable rules proper (b) ->= ok (b)
+                          proper (c) ->= ok (c)
+                          proper (d) ->= ok (d)
+                          proper (f (x1, x2,
+                                    x3)) ->= f (proper (x1),
+                                               proper (x2), proper (x3))
+                          f (x1, x2,
+                            mark (x3)) ->= mark (f (x1, x2,
+                                                   x3))
+                          f (ok (x1), ok (x2),
+                            ok (x3)) ->= ok (f (x1, x2, x3))
+                          top (ok (x1)) ->= top (active (x1))
+                          top (mark (x1)) ->= top (proper (x1))
+                          active (d) ->= m (b)
+                          active (d) ->= mark (c)
+                          active (f (x1, x2,
+                                    x3)) ->= f (x1, x2, active (x3))
+                          active (f (b, c,
+                                    x1)) ->= mark (f (x1, x1, x1))
+             system 
+                    active (f (b, c,
+                              x1)) ->= mark (f (x1, x1, x1))
+                    active (f (x1, x2,
+                              x3)) ->= f (x1, x2, active (x3))
+                    active (d) ->= m (b)
+                    f (x1, x2,
+                      mark (x3)) ->= mark (f (x1, x2,
+                                             x3))
+                    active (d) ->= mark (c)
+                    proper (b) ->= ok (b)
+                    proper (c) ->= ok (c)
+                    proper (d) ->= ok (d)
+                    proper (f (x1, x2,
+                              x3)) ->= f (proper (x1),
+                                         proper (x2), proper (x3))
+                    f (ok (x1), ok (x2),
+                      ok (x3)) ->= ok (f (x1, x2, x3))
+                    2 more rules
+                    total size 86
+             is top-terminating because
+             it contains no strict rules)
+SCC 2 Left (top# (ok (x1)) -> active# (x1))
+SCC 3 Right (system active# (f (x1,
+                               x2, x3)) -> active# (x3)
+                    
+                    total size 7
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (f
+                   ,[ 1 ] * x1 + [ 0 ] * x2 + [ 6 ] * x3 + [ 0 ])
+                   (active#,[ 1 ] * x1 + [ - ])
+             usable rules 
+             system 
+                    active (f (b, c,
+                              x1)) ->= mark (f (x1, x1, x1))
+                    active (f (x1, x2,
+                              x3)) ->= f (x1, x2, active (x3))
+                    active (d) ->= m (b)
+                    f (x1, x2,
+                      mark (x3)) ->= mark (f (x1, x2,
+                                             x3))
+                    active (d) ->= mark (c)
+                    proper (b) ->= ok (b)
+                    proper (c) ->= ok (c)
+                    proper (d) ->= ok (d)
+                    proper (f (x1, x2,
+                              x3)) ->= f (proper (x1),
+                                         proper (x2), proper (x3))
+                    f (ok (x1), ok (x2),
+                      ok (x3)) ->= ok (f (x1, x2, x3))
+                    2 more rules
+                    total size 86
+             is top-terminating because
+             it contains no strict rules)
+SCC 4 Left (active# (f (b, c,
+                       x1)) -> f# (x1, x1, x1))
+SCC 5 Left (active# (f (x1, x2,
+                       x3)) -> f# (x1, x2,
+                                  active (x3)))
+SCC 6 Left (top# (mark (x1)) -> proper# (x1))
+SCC 7 Right (system proper# (f (x1,
+                               x2, x3)) -> proper# (x3)
+                    proper# (f (x1, x2,
+                               x3)) -> proper# (x2)
+                    proper# (f (x1, x2,
+                               x3)) -> proper# (x1)
+                    
+                    total size 21
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (f
+                   ,[ 1 ] * x1 + [ 0 ] * x2 + [ 0 ] * x3 + [ - ])
+                   (proper#,[ 0 ] * x1 + [ - ])
+             usable rules 
+             system proper# (f (x1, x2,
+                               x3)) -> proper# (x3)
+                    proper# (f (x1, x2,
+                               x3)) -> proper# (x2)
+                    
+                    total size 14
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (f
+                   ,[ 0 ] * x1 + [ 1 ] * x2 + [ 0 ] * x3 + [ - ])
+                   (proper#,[ 0 ] * x1 + [ - ])
+             usable rules 
+             system proper# (f (x1, x2,
+                               x3)) -> proper# (x3)
+                    
+                    total size 7
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (f
+                   ,[ 1 ] * x1 + [ 0 ] * x2 + [ 6 ] * x3 + [ 0 ])
+                   (proper#,[ 1 ] * x1 + [ - ])
+             usable rules 
+             system 
+                    active (f (b, c,
+                              x1)) ->= mark (f (x1, x1, x1))
+                    active (f (x1, x2,
+                              x3)) ->= f (x1, x2, active (x3))
+                    active (d) ->= m (b)
+                    f (x1, x2,
+                      mark (x3)) ->= mark (f (x1, x2,
+                                             x3))
+                    active (d) ->= mark (c)
+                    proper (b) ->= ok (b)
+                    proper (c) ->= ok (c)
+                    proper (d) ->= ok (d)
+                    proper (f (x1, x2,
+                              x3)) ->= f (proper (x1),
+                                         proper (x2), proper (x3))
+                    f (ok (x1), ok (x2),
+                      ok (x3)) ->= ok (f (x1, x2, x3))
+                    2 more rules
+                    total size 86
+             is top-terminating because
+             it contains no strict rules)
+SCC 8 Left (proper# (f (x1, x2,
+                       x3)) -> f# (proper (x1),
+                                  proper (x2), proper (x3)))
+SCC 9 Right (system f# (x1, x2,
+                       mark (x3)) -> f# (x1, x2, x3)
+                    f# (ok (x1), ok (x2),
+                       ok (x3)) -> f# (x1, x2, x3)
+                    
+                    total size 20
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (ok,[ 7 ] * x1 + [ 7 ])
+                   (mark,[ 7 ] * x1 + [ 7 ])
+                   (f#
+                   ,[ - ] * x1 + [ 0 ] * x2 + [ 0 ] * x3 + [ - ])
+             usable rules 
+             system f# (x1, x2,
+                       mark (x3)) -> f# (x1, x2, x3)
+                    
+                    total size 9
+             is top-terminating because
+             rule removal by matrix interpretation into arctic numbers
+             matrix interpretation domain Arctic dimension 1
+             M.Map (mark,[ 5 ] * x1 + [ 1 ])
+                   (f#
+                   ,[ - ] * x1 + [ - ] * x2 + [ 1 ] * x3 + [ - ])
+             usable rules 
+             system 
+                    active (f (b, c,
+                              x1)) ->= mark (f (x1, x1, x1))
+                    active (f (x1, x2,
+                              x3)) ->= f (x1, x2, active (x3))
+                    active (d) ->= m (b)
+                    f (x1, x2,
+                      mark (x3)) ->= mark (f (x1, x2,
+                                             x3))
+                    active (d) ->= mark (c)
+                    proper (b) ->= ok (b)
+                    proper (c) ->= ok (c)
+                    proper (d) ->= ok (d)
+                    proper (f (x1, x2,
+                              x3)) ->= f (proper (x1),
+                                         proper (x2), proper (x3))
+                    f (ok (x1), ok (x2),
+                      ok (x3)) ->= ok (f (x1, x2, x3))
+                    2 more rules
+                    total size 86
+             is top-terminating because
+             it contains no strict rules)
+Proof outline
+top-terminating for TRS/DP with 12 strict (pairs) 0 relative (rules)
+DP transform
+    top-terminating for TRS/DP with 13 strict (pairs) 12 relative (rules)
+    EDG decomposed in SCCs
+        top-terminating for TRS/DP with 2 strict (pairs) 12 relative (rules)
+        Cpf2Cpf
+            top-terminating for TRS/DP with 1 strict (pairs) 12 relative (rules)
+            matrix interpretation, domain Arctic dimension 1
+            for 12 usable rules
+                top-terminating for TRS/DP with 0 strict (pairs) 12 relative (rules)
+                no strict pairs
+        top-terminating for TRS/DP with 1 strict (pairs) 0 relative (rules)
+        matrix interpretation, domain Arctic dimension 1
+        for 0 usable rules
+            top-terminating for TRS/DP with 0 strict (pairs) 12 relative (rules)
+            no strict pairs
+        top-terminating for TRS/DP with 3 strict (pairs) 0 relative (rules)
+        matrix interpretation, domain Arctic dimension 1
+        for 0 usable rules
+            top-terminating for TRS/DP with 2 strict (pairs) 0 relative (rules)
+            matrix interpretation, domain Arctic dimension 1
+            for 0 usable rules
+                top-terminating for TRS/DP with 1 strict (pairs) 0 relative (rules)
+                matrix interpretation, domain Arctic dimension 1
+                for 0 usable rules
+                    top-terminating for TRS/DP with 0 strict (pairs) 12 relative (rules)
+                    no strict pairs
+        top-terminating for TRS/DP with 2 strict (pairs) 0 relative (rules)
+        matrix interpretation, domain Arctic dimension 1
+        for 0 usable rules
+            top-terminating for TRS/DP with 1 strict (pairs) 0 relative (rules)
+            matrix interpretation, domain Arctic dimension 1
+            for 0 usable rules
+                top-terminating for TRS/DP with 0 strict (pairs) 12 relative (rules)
+                no strict pairs
