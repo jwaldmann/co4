@@ -9,6 +9,9 @@
 *.o
 *.o-boot
 *.oprof
+*.dyn_o
+*.dyn_hi
+*.dyn_hi-boot
 dist/
 archive/
 scheme/
