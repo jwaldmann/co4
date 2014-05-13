@@ -21,7 +21,7 @@ import           CO4.Frontend.HaskellSrcExts (toTHDeclarations)
 import           CO4.Frontend.TH (parsePreprocessedTHDeclarations)
 import           CO4.Unique (MonadUnique)
 import           CO4.Names
-import           CO4.AllocatorData (constructors,known)
+import           CO4.Allocator.Data (constructors,known)
 import           CO4.PreludeNat
 import           CO4.EncodedAdt (EncodedAdt,isConstantlyDefined,isInvalid,flags')
 import           CO4.Monad (CO4,traced,abortWithStackTrace)
@@ -88,13 +88,13 @@ preludeAdtDeclarations = [
                     , CCon (UntypedName "True")  []
                     ]
   , Adt listName [a] 
-     [ CCon listName []
+     [ CCon nilName []
      , CCon consName [ TVar a , TCon listName [TVar a] ]
      ]
-  , Adt (tupleName 2) [a,b]       [ CCon (tupleName 2) $ map TVar [a,b]       ]
-  , Adt (tupleName 3) [a,b,c]     [ CCon (tupleName 3) $ map TVar [a,b,c]     ]
-  , Adt (tupleName 4) [a,b,c,d]   [ CCon (tupleName 4) $ map TVar [a,b,c,d]   ]
-  , Adt (tupleName 5) [a,b,c,d,e] [ CCon (tupleName 5) $ map TVar [a,b,c,d,e] ]
+  , Adt (tupleTypeName 2) [a,b]       [ CCon (tupleDataName 2) $ map TVar [a,b]       ]
+  , Adt (tupleTypeName 3) [a,b,c]     [ CCon (tupleDataName 3) $ map TVar [a,b,c]     ]
+  , Adt (tupleTypeName 4) [a,b,c,d]   [ CCon (tupleDataName 4) $ map TVar [a,b,c,d]   ]
+  , Adt (tupleTypeName 5) [a,b,c,d,e] [ CCon (tupleDataName 5) $ map TVar [a,b,c,d,e] ]
 
   , Adt maybeName [a] [ CCon ( readName "Nothing") []
                       , CCon ( readName "Just") $ map TVar [a]
