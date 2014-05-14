@@ -9,6 +9,7 @@
 *.o
 *.o-boot
 *.oprof
+*.p_o
 *.dyn_o
 *.dyn_hi
 *.dyn_hi-boot
