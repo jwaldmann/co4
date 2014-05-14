@@ -1,7 +1,7 @@
 {-# LANGUAGE QuasiQuotes #-}
 module CO4.Prelude
   ( parsePrelude, preludeAdtDeclarations, unparsedNames, unparsedPreludeContext
-  , uBool, uList, kList, kNil, kList', kBool, kTuple2, kTuple3, kTuple4, kTuple5, kUnit
+  , uList, kList, allocatorList
   , assertKnown, encAssertKnownProf, encAssertKnown
   , assertDefined, encAssertDefined, encAssertDefinedProf
   , dumpEncoded, encDumpEncoded, encDumpEncodedProf
@@ -21,7 +21,7 @@ import           CO4.Frontend.HaskellSrcExts (toTHDeclarations)
 import           CO4.Frontend.TH (parsePreprocessedTHDeclarations)
 import           CO4.Unique (MonadUnique)
 import           CO4.Names
-import           CO4.AllocatorData (constructors,known)
+import           CO4.Allocator (TAllocator,toAllocator,unsafeTAllocator,constructors,known)
 import           CO4.PreludeNat
 import           CO4.EncodedAdt (EncodedAdt,isConstantlyDefined,isInvalid,flags')
 import           CO4.Monad (CO4,traced,abortWithStackTrace)
@@ -88,13 +88,13 @@ preludeAdtDeclarations = [
                     , CCon (UntypedName "True")  []
                     ]
   , Adt listName [a] 
-     [ CCon listName []
+     [ CCon nilName []
      , CCon consName [ TVar a , TCon listName [TVar a] ]
      ]
-  , Adt (tupleName 2) [a,b]       [ CCon (tupleName 2) $ map TVar [a,b]       ]
-  , Adt (tupleName 3) [a,b,c]     [ CCon (tupleName 3) $ map TVar [a,b,c]     ]
-  , Adt (tupleName 4) [a,b,c,d]   [ CCon (tupleName 4) $ map TVar [a,b,c,d]   ]
-  , Adt (tupleName 5) [a,b,c,d,e] [ CCon (tupleName 5) $ map TVar [a,b,c,d,e] ]
+  , Adt (tupleTypeName 2) [a,b]       [ CCon (tupleDataName 2) $ map TVar [a,b]       ]
+  , Adt (tupleTypeName 3) [a,b,c]     [ CCon (tupleDataName 3) $ map TVar [a,b,c]     ]
+  , Adt (tupleTypeName 4) [a,b,c,d]   [ CCon (tupleDataName 4) $ map TVar [a,b,c,d]   ]
+  , Adt (tupleTypeName 5) [a,b,c,d,e] [ CCon (tupleDataName 5) $ map TVar [a,b,c,d,e] ]
 
   , Adt maybeName [a] [ CCon ( readName "Nothing") []
                       , CCon ( readName "Just") $ map TVar [a]
@@ -157,23 +157,22 @@ unparsedNames = map (convertName . fst) $ toList $ unparsedPreludeContext
 
 -- * Allocators
 
-uBool             = constructors [ Just [], Just [] ]
-kBool False       = known 0 2 []
-kBool True        = known 1 2 []
+uList :: Int -> TAllocator a -> TAllocator [a]
+uList 0 _ = unsafeTAllocator $ known 0 2 []
+uList i a = unsafeTAllocator $ constructors [ Just [], Just [ a', toAllocator $ uList (i-1) a ] ]
+  where
+    a' = toAllocator a
 
-uList 0 _         = known 0 2 []
-uList i a         = constructors [ Just [], Just [ a, uList (i-1) a ] ]
-kList 0 _         = known 0 2 []
-kList i a         = known 1 2 [a, kList (i-1) a]
-kNil              = kList 0 undefined
-kList'            = foldr (\elemAlloc listAlloc -> known 1 2 [elemAlloc, listAlloc]) kNil
+kList :: Int -> TAllocator a -> TAllocator [a]
+kList 0 _ = unsafeTAllocator $ known 0 2 []
+kList i a = unsafeTAllocator $ known 1 2 [a', toAllocator $ kList (i-1) a]
+  where
+    a' = toAllocator a
 
-kTuple2 a b       = constructors [ Just [a,b]       ]
-kTuple3 a b c     = constructors [ Just [a,b,c]     ]
-kTuple4 a b c d   = constructors [ Just [a,b,c,d]   ]
-kTuple5 a b c d e = constructors [ Just [a,b,c,d,e] ]
-
-kUnit             = known 0 1 []
+allocatorList :: [TAllocator a] -> TAllocator [a]
+allocatorList = unsafeTAllocator
+              . foldr (\x xs -> known 1 2 [x, xs]) (known 0 2 [])
+              . map toAllocator
 
 -- * Utilities
 
