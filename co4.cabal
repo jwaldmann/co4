@@ -104,7 +104,7 @@ Executable termcomp2014
 Executable matchbox2014
   hs-source-dirs: tc
   Main-is:            MB.hs
-  Ghc-options:        -W -fno-warn-incomplete-patterns
+  Ghc-options:        -W -fno-warn-incomplete-patterns -threaded -rtsopts
   Build-Depends:      base
                     , containers
                     , mtl, transformers, logict
@@ -113,4 +113,4 @@ Executable matchbox2014
                     , co4
                     , satchmo-smt > 0.4, satchmo >= 2.8
                     , array, hashable, HaXml, wl-pprint-text
-                    , async
+                    , async, stm
