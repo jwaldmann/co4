@@ -28,12 +28,12 @@ $( compileFile [ ImportPrelude, Cache ] "test/CO4/Example/LoopSrs/Standalone.hs"
 cSymbol xs = case xs of
     [] -> known 0 2 []
     x:xs' -> 
-        known 1 2 [ known (toInteger $ fromEnum x) 2 []
+        known 1 2 [ known (fromEnum x) 2 []
                   , cSymbol xs' 
                   ]
 
 -- should be kList !
-uSymbol bits = uList bits completeBool
+uSymbol bits = uList bits complete
 
 -- this is indeed uList
 uWord width bits = uList width (uSymbol bits)
