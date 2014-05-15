@@ -113,3 +113,4 @@ Executable matchbox2014
                     , co4
                     , satchmo-smt > 0.4, satchmo >= 2.8
                     , array, hashable, HaXml, wl-pprint-text
+                    , async
