@@ -109,7 +109,7 @@ Executable matchbox2014
                     , containers
                     , mtl, transformers, logict
                     , satchmo-core
-                    , tpdb >= 0.9.4
+                    , tpdb >= 0.9.5
                     , co4
                     , satchmo-smt > 0.4, satchmo >= 2.8
                     , array, hashable, HaXml, wl-pprint-text
